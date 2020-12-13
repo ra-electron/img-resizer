@@ -23,7 +23,7 @@
         <span>压缩类型：</span>
         <input
           type="radio"
-          :value="1"
+          :value="2"
           id='one'
           v-model="type"
           style="margin-left:20px"
@@ -34,7 +34,7 @@
         >尺寸</label>
         <input
           type="radio"
-          :value="2"
+          :value="1"
           id='two'
           v-model="type"
           style="margin-left:20px"
@@ -69,14 +69,14 @@
           <input
             type="number"
             min="1"
-            v-model="width"
+            v-model="size.width"
           >
           <span style="margin:0 20px;">x</span>
           <span>高</span>
           <input
             type="number"
             min="1"
-            v-model="height"
+            v-model="size.height"
           >
         </div>
       </div>
@@ -85,23 +85,55 @@
 </template>
 
 <script>
+import {getOutput, setOutput,getType,setType,getPercent,setPercent,getSize,setSize} from "../../api/api"
 export default {
     data() {
         return {
             type: 2,
             percent: 50,
-            width: 200,
-            height: 200,
+            size:{
+                width: 200,
+                height: 200,
+            },
             dictorySelected: '',
             outputPath: ''
         }
     },
+    watch:{
+        outputPath(value) {
+            console.log(value)
+        },
+        type(value) {
+            setType(+value)
+        },
+        percent(value) {
+            setPercent(+value)
+        },
+        size(value) {
+            const {width, height} = this.size
+            setSize({
+                width: +width,
+                height: +height
+            })
+        }
+    },
+   
+    created(){
+        this.getInitSettings()
+    },
     methods: {
+        getInitSettings() {
+            this.outputPath = getOutput()
+            this.type = getType()
+            this.percent = getPercent()
+            this.size = getSize()
+        },
         showFileDialog() {
             const dialog = require('electron').remote.dialog
             dialog.showOpenDialog({ properties: ['openDirectory'] }, (filename) => {
                 if (filename && filename.length === 1) {
                     this.outputPath = filename[0]
+                    setOutput(value)
                 } else {
                     // this.outputPath = ''
                 }
@@ -137,7 +169,7 @@ input[type="number"] {
   padding: 2px;
   border-radius: 2px;
   background: #3c3e41;
-  color: #6E6E6E;
+  color: #6e6e6e;
 }
 
 .set-block {
@@ -151,5 +183,6 @@ input[type="number"] {
   padding: 2px;
   border-radius: 2px;
   background: #3c3e41;
+  color: #6e6e6e;
 }
 </style>

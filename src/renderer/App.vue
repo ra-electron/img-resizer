@@ -23,7 +23,7 @@
     name: 'img-resizer',
     data() {
         return {
-            view: false
+            view: true
         }
     },
     components: {
