@@ -1,9 +1,13 @@
+import {clipboard}  from 'electron'
+console.log(clipboard)
 export default {
     methods: {
         handleTPaste(event) {
+            console.log(clipboard.readImage())
             let image = null
             if (event.clipboardData && event.clipboardData.items) {
                 image = isImage(event.clipboardData.items)
+                console.log(event.clipboardData.items)
                 if (image) {
                     event.preventDefault()
                     let file = image.getAsFile()
@@ -36,5 +40,5 @@ function getFilename(e) {
         value = e.clipboardData.getData('text/plain')
     }
     value = value.split('\r')
-    return value.first()
+    return value
 }

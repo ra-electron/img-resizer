@@ -3,7 +3,6 @@ export default {
         handleDrag(e) {
             // 获取文件列表
             let fileList = e.dataTransfer.files
-            let hasImg = this.fileUpload(fileList)
             if (hasImg) {
                 this.isDrogover = false
                 e.preventDefault()

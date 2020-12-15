@@ -7,6 +7,7 @@
       @drop="handleDrag"
       @dragover="handleDragover"
       @dragleave="handleDragleave"
+      @paste="handleTPaste"
     >
       <h2>DROP IMAGE HERE FROM COMPUTER</h2>
       <p>OR</p>
